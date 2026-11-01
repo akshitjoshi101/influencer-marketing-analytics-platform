@@ -18,25 +18,7 @@ An end-to-end **synthetic-data portfolio project** combining a role-based influe
 
 ## Architecture
 
-```text
-Sponsors / Influencers / Admins
-              |
-       FastAPI + Jinja2
-              |
-      PostgreSQL ------ Redis (analytics cache)
-              |
-      Ad-request events -> Kafka -> PySpark streaming (local test)
-
-Raw analytics data / Lakehouse tables
-              |
-     Microsoft Fabric Data Pipeline
-              |
-       PySpark notebook activity
-              |
-       Bronze -> Silver -> Gold
-              |
-   Dimension and fact tables -> Power BI
-```
+![Architecture](docs/Architecture.svg)
 
 The **Kafka local streaming test** and **Microsoft Fabric Lakehouse processing** are separate workflow components; the repository does not claim that Kafka streams automatically feed the Fabric pipeline. Fabric Data Pipeline orchestration covers the notebook execution shown below.
 
@@ -161,5 +143,3 @@ uvicorn api:app --reload
 - Add repeatable local Docker Compose setup for PostgreSQL, Redis, Kafka, and FastAPI.
 - Add tests for authentication, request state transitions, aggregation logic, and combined sponsor/influencer slicer behavior.
 - Validate and resolve invalid campaign durations in the source and Gold layer; refresh Power BI afterward.
-- Rename the Executive Overview **Total Payments** KPI to **Paid + Completed Request Amount**.
-- Add a versioned Fabric pipeline definition/export and synthetic data-generation documentation.
