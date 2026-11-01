@@ -41,7 +41,20 @@ The data-processing workflow uses a Medallion Architecture:
 - **Silver:** cleaning, validation, and transformations in PySpark.
 - **Gold:** analytics-ready dimension and fact tables consumed by Power BI.
 
-The pipeline supports repeatable notebook execution. **No recurring schedule is claimed here**; scheduling would require a separately configured trigger.
+### Pipeline Configuration and Version Control
+
+The Microsoft Fabric Data Pipeline configuration is available in [`fabric/pipeline/`](fabric/pipeline/).
+
+The pipeline includes:
+
+- **Notebook orchestration:** Executes the PySpark notebook responsible for data cleaning and Gold-layer transformations.
+- **Conditional failure handling:** Triggers a dedicated failure activity when notebook execution fails.
+- **Version-controlled configuration:** Stores a sanitized JSON export in GitHub, allowing the pipeline structure and execution settings to be inspected.
+- **Execution validation:** A successful pipeline execution is documented in the screenshots.
+
+The exported configuration uses placeholder workspace and notebook identifiers to avoid publishing environment-specific references.
+
+**Note:** Pipeline orchestration has been implemented and tested. Recurring scheduled execution is not claimed.
 
 ![Successful Microsoft Fabric pipeline run](docs/screenshots/07_fabric_pipeline.png)
 
