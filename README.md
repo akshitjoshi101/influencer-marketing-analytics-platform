@@ -35,11 +35,23 @@ The **Kafka local streaming test** and **Microsoft Fabric Lakehouse processing**
 
 Created a **Microsoft Fabric Data Pipeline** with a notebook activity (`Run Data Cleaning and Gold`) to orchestrate execution of the PySpark transformation notebook. A recorded pipeline run and its notebook activity **succeeded**; the screenshot shows a **4 minute 44 second** notebook activity duration.
 
-The data-processing workflow uses a Medallion Architecture:
+### Synthetic Dataset
 
-- **Bronze:** raw source data / landing tables.
-- **Silver:** cleaning, validation, and transformations in PySpark.
-- **Gold:** analytics-ready dimension and fact tables consumed by Power BI.
+This project uses an AI-generated synthetic dataset created with the assistance of Anthropic Claude for development, testing, and analytics demonstrations.
+
+The analytics dataset contains approximately:
+
+- **10,000 users** across sponsor, influencer, and administrator roles.
+- **5,000 campaigns** with budgets, visibility settings, and campaign dates.
+- **98,900 advertising requests** containing sponsorship relationships, workflow statuses, and recorded payment amounts.
+
+### Data Processing
+
+The synthetic records were processed using Microsoft Fabric and PySpark, following the Medallion Architecture:
+
+- **Bronze:** Raw synthetic data.
+- **Silver:** Data cleaning, transformation, and validation.
+- **Gold:** Analytics-ready dimension and fact tables used in Power BI.
 
 ### Pipeline Configuration and Version Control
 
