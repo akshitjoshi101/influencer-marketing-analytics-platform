@@ -41,7 +41,7 @@ The local Kafka streaming test and Microsoft Fabric notebook are separate workfl
 ### Interpreting monetary values
 
 - **Actual Paid Amount** counts records currently marked `paid` and represents simulated payment confirmation.
-- **Recorded Request Value** sums recorded `payment_amount` values across statuses. It is **not** actual revenue or cash received.
+- **Total Payments All Status Combined** sums recorded `payment_amount` values across statuses. It is **not** actual revenue or cash received.
 - `pending` is a sent request awaiting response; `completed` means work finished but not necessarily paid.
 - Synthetic data deliberately includes extreme budget-utilization cases. Charts can filter those out when the title explains the threshold.
 
@@ -70,6 +70,20 @@ uvicorn api:app --reload
 2. Review the notebook's table names and environment-specific assumptions before running.
 3. Open `powerbi/marketing_platform_project.pbix` in Power BI Desktop. If refresh or credentials are requested, update sources to your local copies or Fabric environment.
 4. Use `data/powerbi/*.csv` to inspect the synthetic datasets and the dimensions used in the report.
+
+## Data Pipeline Orchestration — Microsoft Fabric
+
+Implemented a Microsoft Fabric Data Pipeline to orchestrate the execution of the PySpark data-processing notebook.
+
+The notebook processes influencer marketing data through a Medallion Architecture:
+
+- **Bronze Layer:** Raw data ingestion and storage.
+- **Silver Layer:** Data cleaning, validation, and transformation using PySpark.
+- **Gold Layer:** Analytics-ready dimension and fact tables for Power BI reporting.
+
+The Fabric pipeline coordinates notebook execution, supporting a repeatable data-processing workflow from raw data to analytics-ready datasets.
+
+**Technologies:** Microsoft Fabric, Fabric Data Pipelines, PySpark, Delta Lake, Medallion Architecture, Power BI.
 
 ## Security and reproducibility
 
