@@ -1,0 +1,21 @@
+services:
+
+  api:
+    build: .
+    container_name: influencer-api-container
+    ports:
+      - "8000:8000"
+
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+      KAFKA_BOOTSTRAP_SERVERS: host.docker.internal:9092
+      REDIS_URL: redis://redis:6379/0
+
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:latest
+    container_name: influencer-redis
+    ports:
+      - "6379:6379"

@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Login Page{% endblock %}
+
+{% block content %}
+<div class="login-register-box">
+    <div class="card">
+        <div class="card-body">
+            <h3 class="text-center"><b>Login As Sponsor</b></h3>
+            <hr>
+            <br>
+            <form method="POST">
+                <div class="row g-3 align-items-center">
+                    <div class="col-auto">
+                        <label for="inputUsernamesponsor" class="col-form-label">Username:</label>
+                    </div>
+                    <div class="col-auto">
+                        <input type="text" name="username" id="inputUsernamesponsor" class="form-control" required>
+                    </div>
+                </div>
+                <br>
+                <div class="row g-3 align-items-center">
+                    <div class="col-auto">
+                        <label for="inputPasswordsponsor" class="col-form-label">Password:</label>
+                    </div>
+                    <div class="col-auto">
+                        <input type="password" name="password" id="inputPasswordsponsor" class="form-control" required>
+                    </div>
+                </div>
+                <br>
+                <div class="d-flex justify-content-end gap-2">
+                    <button class="btn btn-primary" type="submit">Login</button>
+                    <button class="btn btn-primary" type="reset">Reset</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

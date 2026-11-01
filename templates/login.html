@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Login Page{% endblock %}
+
+{% block content %}
+<div class="login-register-box">
+    <div class="card">
+        <div class="card-body">
+            <h2 class="text-center">Login Area</h2><hr>
+            <h3 class="mt-4">Login as Admin</h3>
+            <a class="btn btn-primary" href="/login/admin" role="button">Login</a>
+            <br><br>
+            <h3>Login as Influencer</h3>
+            <a class="btn btn-primary" href="/login/influencer" role="button">Login</a>
+            <br><br>
+            <h3>Login as Sponsor</h3>
+            <a class="btn btn-primary" href="/login/sponsor" role="button">Login</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Find Influencers</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --bg: #f5f6fb;
+            --surface: #ffffff;
+            --primary: #4f46e5;
+            --primary-600: #4338ca;
+            --primary-50: #eef2ff;
+            --ink: #1e1b2e;
+            --muted: #6b7280;
+            --border: #e6e8f0;
+            --success: #16a34a;
+            --danger: #dc2626;
+            --info: #0891b2;
+            --warning: #d97706;
+            --radius-lg: 16px;
+            --radius-md: 12px;
+            --shadow-sm: 0 1px 2px rgba(15, 23, 42, .06);
+            --shadow-md: 0 12px 30px -10px rgba(79, 70, 229, .28);
+        }
+
+        * { scrollbar-width: thin; }
+
+        body {
+            background: var(--bg);
+            color: var(--ink);
+            font-family: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
+            min-height: 100vh;
+        }
+
+        h1, h2, h3, h4, h5, h6 { font-weight: 700; letter-spacing: -0.01em; color: var(--ink); }
+
+        p { color: #3f3d56; line-height: 1.65; }
+
+        hr { border-top: 1px solid var(--border); opacity: 1; margin: 1.75rem 0; }
+
+        a { text-decoration: none; }
+
+        /* Navbar */
+        .navbar {
+            background: rgba(255, 255, 255, .88) !important;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            padding: .9rem 1.25rem;
+            position: sticky;
+            top: 0;
+            z-index: 1030;
+        }
+
+        .navbar-brand {
+            font-weight: 800;
+            color: var(--primary) !important;
+            font-size: 1.3rem;
+            letter-spacing: -0.02em;
+        }
+
+        .navbar .nav-link {
+            color: var(--ink) !important;
+            font-weight: 500;
+            margin: 0 .15rem;
+            padding: .5rem 1rem !important;
+            border-radius: 999px;
+            transition: all .18s ease;
+        }
+
+        .navbar .nav-link:hover { background: var(--primary-50); color: var(--primary) !important; }
+        .navbar .nav-link.active { background: var(--primary); color: #fff !important; }
+
+        /* Buttons */
+        .btn {
+            border-radius: 10px;
+            font-weight: 600;
+            padding: .55rem 1.25rem;
+            border: none;
+            transition: transform .15s ease, box-shadow .15s ease, background-color .15s ease;
+        }
+
+        .btn:hover { transform: translateY(-1px); }
+        .btn-primary { background: var(--primary); }
+        .btn-primary:hover, .btn-primary:focus { background: var(--primary-600); }
+        .btn-success { background: var(--success); }
+        .btn-success:hover { background: #15803d; }
+        .btn-danger { background: var(--danger); }
+        .btn-danger:hover { background: #b91c1c; }
+        .btn-info { background: var(--info); color: #fff; }
+        .btn-info:hover { background: #0e7490; color: #fff; }
+        .btn-secondary { background: #64748b; }
+        .btn-secondary:hover { background: #475569; }
+        .btn-outline-primary { border: 1.5px solid var(--primary); color: var(--primary); background: transparent; }
+        .btn:disabled { transform: none; opacity: .6; }
+
+        /* Cards */
+        .card {
+            background: var(--surface) !important;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .card-body { padding: 2.25rem; }
+
+        .login-register-box { max-width: 480px; margin: 5.5rem auto 3rem; }
+        .login-register-box .card-body h2,
+        .login-register-box .card-body h3 { text-align: center; }
+        .login-register-box .card-body h3 { font-size: 1.15rem; color: var(--muted); margin-top: 1.75rem !important; }
+
+        /* list group as cards */
+        .list-group { gap: .7rem; display: flex; flex-direction: column; }
+
+        .list-group-item {
+            background: var(--surface) !important;
+            border: 1px solid var(--border) !important;
+            border-radius: var(--radius-md) !important;
+            padding: 1.15rem 1.4rem;
+            box-shadow: var(--shadow-sm);
+            transition: box-shadow .2s ease, transform .2s ease;
+        }
+
+        .list-group-item:hover { box-shadow: var(--shadow-md); }
+
+        /* modal */
+        .modal-content {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            border: none;
+            box-shadow: 0 25px 60px rgba(15, 23, 42, .3);
+        }
+
+        .modal-header, .modal-footer { border-color: var(--border); }
+
+        /* forms */
+        .form-control, .form-select {
+            border-radius: 10px;
+            border: 1.5px solid var(--border);
+            padding: .6rem .95rem;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px var(--primary-50);
+        }
+
+        label, .col-form-label { font-weight: 600; color: var(--ink); }
+
+        /* headings inside content */
+        .container h2 { margin-top: 3rem; margin-bottom: 1.25rem; font-size: 1.6rem; }
+        .container h2:first-of-type { margin-top: 1.5rem; }
+
+        /* tables */
+        .table { background: var(--surface); border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-sm); }
+        .table thead { background: var(--primary-50); }
+        .table thead th { border-bottom: none; color: var(--primary-600); font-weight: 700; }
+
+        /* badges */
+        .badge { border-radius: 999px; font-weight: 600; padding: .45em .85em; }
+
+        /* hero (index page) */
+        .hero {
+            background: radial-gradient(circle at top left, var(--primary-50), #ffffff 55%);
+            border-radius: 24px;
+            padding: 3.5rem 2rem;
+            margin-top: 1.5rem;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border);
+        }
+
+        .hero-eyebrow {
+            display: inline-block;
+            background: var(--primary-50);
+            color: var(--primary);
+            font-weight: 700;
+            font-size: .8rem;
+            letter-spacing: .06em;
+            text-transform: uppercase;
+            padding: .4rem 1rem;
+            border-radius: 999px;
+            margin-bottom: 1.25rem;
+        }
+    
+/* Subtle interface refinements — no route or template changes */
+:root { --shadow-md: 0 8px 22px rgba(30, 41, 59, .09); }
+body { line-height: 1.55; }
+.container, .container-fluid { padding-left: clamp(1rem, 2.5vw, 1.75rem); padding-right: clamp(1rem, 2.5vw, 1.75rem); }
+.navbar { box-shadow: 0 1px 6px rgba(15,23,42,.035); }
+.navbar .nav-link { border-radius: 9px; }
+.navbar .nav-link.active { background: var(--primary-50, #eef2ff); color: var(--primary, #4f46e5) !important; }
+.navbar .nav-link:focus-visible, .btn:focus-visible, a:focus-visible { outline: 3px solid rgba(79,70,229,.35); outline-offset: 2px; }
+.card { overflow-wrap: anywhere; }
+.card-body { padding: clamp(1.1rem, 2vw, 1.75rem); }
+.card-title { line-height: 1.4; }
+.btn { border-radius: 9px; transition: background-color .15s ease, box-shadow .15s ease; }
+.btn:hover { transform: none; }
+.btn-warning { color: #241a05; }
+.form-control, .form-select { max-width: 100%; }
+.form-control:focus, .form-select:focus { box-shadow: 0 0 0 3px rgba(79,70,229,.12); }
+.table-responsive { border-radius: 12px; }
+.table td, .table th { vertical-align: middle; }
+.list-group-item { box-shadow: none; }
+.list-group-item:hover { box-shadow: 0 3px 12px rgba(15,23,42,.06); }
+.modal-body { overflow-wrap: anywhere; }
+@media (max-width: 767.98px) {
+  .navbar .nav-link { margin: .15rem 0; }
+  .card-body { padding: 1.15rem; }
+  .container h2 { font-size: 1.35rem; }
+  .btn { margin-bottom: .25rem; }
+  .login-register-box { margin: 2.5rem auto 1.5rem; padding: 0 .75rem; }
+}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; } }
+
+</style>
+</head>
+
+<body>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <div class="container mt-3">
+      {% for category, message in messages %}
+      <div class="alert alert-{{ 'danger' if category in ['danger','error'] else category }} alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
+  <div class="container mt-5">
+    <a href="/sponsor_dashboard/campaign" class="btn btn-secondary"><i class="bi bi-arrow-left"></i> Go Back</a>
+    <h2>Available Influencers</h2>
+    <p class="text-muted" style="margin-top:-0.75rem;">
+      Ranked by predicted fit for this campaign (content similarity to their past work,
+      acceptance track record, and budget fit).
+    </p>
+    <div class="list-group">
+      {% for entry in ranked_influencers %}
+      {% set influencer = entry.influencer %}
+      <div class="list-group-item d-flex justify-content-between align-items-center">
+        <div>
+          <span class="fw-semibold">{{ influencer.username }}</span>
+          <span class="badge {% if entry.match_score >= 60 %}bg-success{% elif entry.match_score >= 35 %}bg-warning text-dark{% else %}bg-secondary{% endif %} ms-2"
+                title="Content fit: {{ entry.content_score }}% · Track record: {{ entry.track_record_score }}% · Budget fit: {{ entry.budget_score }}%">
+            {{ entry.match_score }}% match
+          </span>
+        </div>
+        {% if influencer.id in sent_influencer_ids %}
+        <button type="button" class="btn btn-secondary" disabled>Request Sent</button>
+        {% else %}
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+          data-bs-target="#requestModal{{ influencer.id }}">Request</button>
+        {% endif %}
+      </div>
+
+      <!-- Request Modal for Each Influencer -->
+      <div class="modal fade" id="requestModal{{ influencer.id }}" tabindex="-1"
+        aria-labelledby="requestModalLabel{{ influencer.id }}" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="requestModalLabel{{ influencer.id }}">Request Campaign for {{
+                influencer.username }}</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form method="POST"
+                action="{{ url_for('send_campaign_request', campaign_id=ad_request.campaign_id, ad_request_id=ad_request.id, influencer_id=influencer.id) }}">
+                <div class="mb-3">
+                  <label for="message" class="form-label">Message</label>
+                  <textarea class="form-control" id="message" name="message" rows="3" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Send Request</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>

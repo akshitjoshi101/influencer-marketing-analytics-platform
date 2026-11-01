@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Register Page{% endblock %}
+
+{% block content %}
+<div class="login-register-box">
+    <div class="card">
+        <div class="card-body">
+            <h2 class="text-center">Registration Area</h2>
+            <hr>
+            <h3 class="mt-4">Register as Admin</h3>
+            <a class="btn btn-primary" href="/register/admin" role="button">Register</a>
+            <br><br>
+            <h3>Register as Influencer</h3>
+            <a class="btn btn-primary" href="/register/influencer" role="button">Register</a>
+            <br><br>
+            <h3>Register as Sponsor</h3>
+            <a class="btn btn-primary" href="/register/sponsor" role="button">Register</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
